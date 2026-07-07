@@ -1,25 +1,30 @@
-from skyfield.api import EarthSatellite,load
+from skyfield.api import EarthSatellite, load
+def livetracker(query):
+    query=query.strip().upper()
 
-satname=input("Enter the satellite name")
-with open("data/starlink.tle.txt","r",encoding="utf-8") as f:
-    lines=f.readlines()
-    found=False
-    for i in range(len(lines)):
+    with open("data/starlink.tle.txt","r",encoding="utf-8") as f:
+        lines=f.readlines()
+    for i in range(0,len(lines)-2):
         name=lines[i].strip()
-        if name == satname:
-            line1=lines[i+1].strip()
-            line2=lines[i+2].strip()
-            satname=EarthSatellite(line1,line2,name)
+        line1=lines[i+1].strip()
+        line2=lines[i+2].strip()
+        parts=line1.split()
+        if len(parts)<2:
+            continue
+        norad=parts[1][:-1]
+        if name.upper()==query or norad==query:
+            satellite = EarthSatellite(line1,line2,name)
             ts=load.timescale()
             t=ts.now()
-            geocenteric=satname.at(t)
-            subpoint=geocenteric.subpoint()
-            print()
-            print("Satellite Name: ",satname.name)
-            print("Satellite longitude : ",subpoint.longitude.degrees)
-            print("Satellite latitude : ",subpoint.latitude.degrees)
-            print("Altitude (in km) : ",subpoint.elevation.km)
-            found=True
-            break
-    if found==False:
-        print("satellite not found")
+            geocentric=satellite.at(t)
+            subpoint=geocentric.subpoint()
+            velocity=geocentric.velocity.km_per_s
+            speed=(velocity[0]**2+velocity[1]**2+velocity[2]**2)**0.5
+            return {
+                "Name": satellite.name,
+                "Latitude" : round(subpoint.latitude.degrees,4),
+                "Longitude" : round(subpoint.longitude.degrees,4),
+                "Altitude" : round(subpoint.elevation.km,2),
+                "Velocity" : round(speed,2)
+            }
+    

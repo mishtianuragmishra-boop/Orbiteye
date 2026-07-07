@@ -1,22 +1,18 @@
 import csv
 from datetime import datetime
 
-
-
 def bstar():
 
     BSTARavg=0
 
-    highest_BSTAR=0
-    lowest_BSTAR=999
+    highest_BSTAR=float("-inf")
+    lowest_BSTAR=float("inf")
 
     highestBSTAR=""
     lowestBSTAR=""
 
     sum_BSTAR=0
     tsat=0
-
-    found=False
 
     with open("data/starlink.csv","r",encoding="utf-8") as f:
         reader=csv.DictReader(f)
@@ -36,25 +32,21 @@ def bstar():
 
     BSTARavg=sum_BSTAR/tsat
 
-    print("The average BSTAR is:",BSTARavg)
-    print("Total number of satellites",tsat)
-
-    print(
-        "=====Highest BSTAR=====" ,highest_BSTAR,
-        "=====Satellite=====",highestBSTAR
-        )
-
-    print(
-        "=====Lowest BSTAR=====",lowest_BSTAR,
-        "=====Satellite=====",lowestBSTAR
-        )
+    return {
+        "Average BSTAR": BSTARavg,
+        "Total satellites": tsat,
+        "Highest BSTAR": highest_BSTAR,
+        "Satellite with highest BSTAR": highestBSTAR,
+        "Lowest BSTAR": lowest_BSTAR,
+        "Satellite with lowest BSTAR": lowestBSTAR,
+    }
     
 def eccentricity():
 
     eccavg=0
 
-    highest_ecc=0
-    lowest_ecc=999
+    highest_ecc=float("-inf")
+    lowest_ecc=float("inf")
 
     highest_e=""
     lowest_e=""
@@ -79,20 +71,14 @@ def eccentricity():
                 lowest_e=row["OBJECT_NAME"]
 
         eccavg=sum_ecc/tsat
-
-        print("The average Eccentricity is:",eccavg)
-        print("Total number of satellites",tsat)
-
-        print(
-            "=====Highest Eccentricity=====" ,highest_ecc,
-            "=====Satellite=====",highest_e
-            )
-
-        print(
-            "=====Lowest Eccentricity=====",lowest_ecc,
-            "=====Satellite=====",lowest_e
-             )
-    
+        return{
+            "Average Eccentricity": eccavg,
+            "Total satellites": tsat,
+            "Highest Eccentricity": highest_ecc,
+            "Satellite with highest Eccentricity": highest_e,
+            "Lowest Eccentricity": lowest_ecc,
+            "Satellite with lowest Eccentricity": lowest_e,
+        }    
 def epoch():
 
     highest_epoch=None
@@ -123,22 +109,19 @@ def epoch():
 
     avg_timestamp=sumepoch/tsat
     avgepoch=datetime.fromtimestamp(avg_timestamp)
-    print("=====Average EPOCH=====",avgepoch)
+    return{
+        "Average Epoch": avgepoch,
+        "Total satellites": tsat,
+        "Highest Epoch": highest_epoch,
+        "Satellite with highest Epoch": highestepoch,
+        "Lowest Epoch": lowest_epoch,
+        "Satellite with lowest Epoch": lowestepoch,
+    }
 
-    print(
-        "=====Newest epoch=====" ,highest_epoch,
-        "=====Satellite=====",highestepoch
-            )
-
-    print(
-        "=====Oldest epoch=====",lowest_epoch,
-        "=====Satellite=====",lowestepoch
-            )
-            
 def inclination():
 
-    highest_inc=0
-    lowest_inc=999
+    highest_inc=float("-inf")
+    lowest_inc=float("inf")
 
     highinc=""
     lowinc=""
@@ -161,23 +144,17 @@ def inclination():
                 lowinc=row["OBJECT_NAME"]
 
     incavg=sum_inc/tsat
-
-    print("=====The average inclination is=====",incavg)
-    print("=====Total number of satellites=====",tsat)
-
-    print(
-        "=====Highest incllination=====" ,highest_inc,
-        "=====Satellite=====",highinc
-        )
-
-    print(
-        "=====Lowest Inclination=====",lowest_inc,
-        "=====Satellite=====",lowinc
-        )
-        
+    return{
+        "Average Inclination": incavg,
+        "Total satellites": tsat,
+        "Highest Inclination": highest_inc,
+        "Satellite with highest Inclination": highinc,
+        "Lowest Inclination": lowest_inc,
+        "Satellite with lowest Inclination": lowinc,
+    }
 def meanmotion():
-    highest_meanmotion=0
-    lowest_meanmotion=999
+    highest_meanmotion=float("-inf")
+    lowest_meanmotion=float("inf")
     highest_mmsat=""
     lowest_mmsat=""
 
@@ -199,10 +176,13 @@ def meanmotion():
                 lowest_meanmotion=meanmotion
                 lowest_mmsat=row["OBJECT_NAME"]
 
-    meanmotion=sum_meanmotion/tsat
-    print(f"The average Mean Motion is: {meanmotion:4f}")
-    print("=====Total number of satellites=====",tsat)
-    print("=====Highest Mean Motion=====" ,highest_meanmotion,
-          "=====Satellite=====",highest_mmsat)
-    print("=====Lowest Mean Motion=====",lowest_meanmotion,
-          "=====Satellite=====",lowest_mmsat)
+    meanmotion_avg=sum_meanmotion/tsat
+
+    return {
+        "Average Mean Motion": meanmotion_avg,
+        "Total satellites": tsat,
+        "Highest Mean Motion": highest_meanmotion,
+        "Satellite with highest Mean Motion": highest_mmsat,
+        "Lowest Mean Motion": lowest_meanmotion,
+        "Satellite with lowest Mean Motion": lowest_mmsat,
+    }

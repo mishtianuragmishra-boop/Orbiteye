@@ -1,0 +1,27 @@
+{
+  "name": "orbiteye",
+  "version": "1.0.0",
+  "description": "OrbitEye is a Python-based satellite tracking and analysis application developed as an Electronics and Communication Engineering (ECE) project. It allows users to search for satellites, analyze orbital parameters, and track satellite positions using real-world orbital data from CelesTrak.",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mishtianuragmishra-boop/Orbiteye.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/mishtianuragmishra-boop/Orbiteye/issues"
+  },
+  "homepage": "https://github.com/mishtianuragmishra-boop/Orbiteye#readme",
+  "dependencies": {
+    "cesium": "^1.143.0"
+  }
+}

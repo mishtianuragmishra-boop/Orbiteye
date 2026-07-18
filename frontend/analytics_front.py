@@ -1,291 +1,196 @@
 import tkinter as tk
 from frontend import gui
 
+
 from backend.bstargraph import gen_bstargraph
 from backend.bstarstat import gen_bstarstats
+
 
 from backend.eccgraph import gen_eccgraph
 from backend.eccstat import gen_eccstat
 
+
 from backend.epochgraph import gen_epochgraph
 from backend.epochstat import gen_epochstat
+
 
 from backend.meanmotiongraph import gen_meanmotiongraph
 from backend.meanmotionstat import gen_meanmotionstat
 
+
 from backend.incgraph import gen_incgraph
 from backend.incstat import gen_incstat
 
+
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
+
 
 def analytics():
 
-    window=tk.Toplevel(gui.root)
-    window.title("Analytics")
-    window.geometry("700x950")
-    window.configure(bg="#DA2C43")
+
+    #main analytics window
+    try:
+        print("1")
+        window=tk.Toplevel(gui.root)
+        window.title("Analytics")
+        window.geometry("1200x950")
+        window.configure(bg="#DA2C43")
+
 
     #mainframe
 
-    main_frame=tk.Frame(
-        controls_frame,
-        bg="#DA2C43"
-    )
-    main_frame.pack(fill="both",expand=True)
+        print("2")
+        main_frame=tk.Frame(
+            window,
+            bg="#DA2C43"
+        )
+        main_frame.pack(fill="both",expand=True)
+
 
     #gaphframe
 
-    graph_frame=tk.Frame(
-        main_frame,
-        bg="#FFF5F8",
-        width=500,
-        height=750
-    )
-    graph_frame.pack(side="left",padx=20,pady=20)
-    graph_frame.pack_propagate(False)
+        print("3") 
+        graph_frame=tk.Frame(
+            main_frame,
+            bg="#FFF5F8",
+            width=700,
+            height=850
+        )
+        graph_frame.pack(side="left",padx=20,pady=20)
+        graph_frame.pack_propagate(False)
 
-    #controls frame(RIGHT)
 
-    controls_frame=tk.Frame(
-        main_frame,
-        bg="#DA2C43"
-    )
-    controls_frame.pack(side="right",fill="y",padx=20,pady=20)
+#right control frame
+        print("4")
+        controls_frame=tk.Frame(
+            main_frame,
+            bg="#DA2C43",
+            width=350,
+            height=850
+        )
 
-    def show_graph(fig):
-        for widget in graph_frame.winfo_children():
-            widget.destroy()
 
-        canvas=FigureCanvasTkAgg(fig,master=graph_frame)
-        canvas.draw()
-        canvas.get_tk_widget().pack(fill="both",expand=True)
+        controls_frame.pack(side="right",padx=20,pady=20,fill="y")
+
+
+        controls_frame.pack_propagate(False)
+        print("controlframe")
+
+
+#showing graph function
+
+        def show_graph(fig):
+            print("Show graph called")
+            print(fig)
+            for widget in graph_frame.winfo_children():
+                widget.destroy()
+            canvas=FigureCanvasTkAgg(fig,master=graph_frame)
+            canvas.draw()
+            widget=canvas.get_tk_widget()
+            widget.pack(
+                fill="both",
+                expand=True
+            )
+            graph_frame.update_idletasks()
+            print("canvas packed")
+
 
 #title
-    title=tk.Label(
-        controls_frame,
-        text="Analytics",
-        font=("Segoe UI",30,"Italic","bold"),
-        bg="#DA2C43",
-        fg="#FFB5C0"
-    )
-    title.pack(pady=15)
-
-#BSTAR
-
-    bstar_label=tk.Label(
-        controls_frame,
-        text="BSTAR",
-        bg="#DA2C43",
-        fg="#FFB5C0",
-        font=("Segoe UI",22,"italic")
-    )
-    bstar_label.pack()
-
-    bstar_button_frame=tk.Frame(
-        controls_frame,
-        bg="#DA2C43"
-    )
-    bstar_button_frame.pack(pady=5)
+        print("6")
+        title=tk.Label(
+            controls_frame,
+            text="Analytics",
+            font=("Segoe UI",30,"italic","bold"),
+            bg="#DA2C43",
+            fg="#FFB5C0"
+        )
+        title.pack(pady=15)
+        print("ttt-timetotwice")
 
 
-    bstargraph_btn=tk.Button(
-        bstar_button_frame,
-        text="Graph",
-        width=15,
-        bg="#D20A2E",
-        fg="#FFB5C0",
-        height=2,
-        command=lambda:show_graph(gen_bstargraph())
-        
-    )
-    bstargraph_btn.pack(side="left",padx=10)
+#helper for making ever single analytics function
+        print("7")
 
-    bstarstat_btn=tk.Button(
-        bstar_button_frame,
-        text="Statistics",
-        width=15,
-        bg="#D20A2E",
-        fg="#FFB5C0",
-        height=2,
-        command=gen_bstarstats
-    )
-    bstarstat_btn.pack(side="left", padx=10)
-#meanmotion
-    meanmotion_frame=tk.Frame(
-        controls_frame,
-        bg="#DA2C43"
-    )
-    meanmotion_frame.pack(pady=(20,5))
+        def add_section(title,graph_function,stat_function):
+            print("Creating")
+            frame=tk.Frame(
+            controls_frame,
+            bg="#DA2C43"
+             )
+            frame.pack(pady=15)
+            print(title,"frame ok")
 
-    meanmotion_label=tk.Label(
-        meanmotion_frame,
-        text="Mean Motion",
-        bg="#DA2C43",
-        font=("Segoe UI",22,"italic"),
-        fg="#FFB5C0"
-    )
-    meanmotion_label.pack()
+            tk.Label(
+                frame,
+                text=title,
+                font=("Segoe UI",15,"italic"),
+                bg="#DA2C43",
+                fg="#FFB5C0"
+            ).pack()
+            print(title,"label ok")
 
-    meanmotion_button_frame=tk.Frame(
-        meanmotion_frame,
-        bg="#DA2C43"
-    )
-    meanmotion_button_frame.pack(pady=5)
+            button_frame=tk.Frame(
+                frame,
+                bg="#DA2C43"
+            )
+            button_frame.pack(pady=5)
+            print(title,"button frame ok")
 
-    meanmotiongraph_btn=tk.Button(
-        meanmotion_button_frame,
-        text="Graph",
-        width=15,
-        bg="#D20A2E",
-        fg="#FFB5C0",
-        height=2,
-        command=lambda: show_graph(gen_meanmotiongraph())
-    )
+            tk.Button(
+                button_frame,
+                text="Graph",
+                width=15,
+                height=2,
+                bg="#D20A2E",
+                fg="#FFB5C0",
+                command=lambda:show_graph(graph_function())
+            ).pack(side="left",padx=10)
+            print(title,"graph button ok")
 
-    meanmotiongraph_btn.pack(side="left",padx=15)
 
-    meanmotionstat_btn=tk.Button(
-        meanmotion_button_frame,
-        text="Statistics",
-        width=15,
-        bg="#D20A2E",
-        fg="#FFB5C0",
-        height=2,
-        command=gen_meanmotionstat
-    )
-    meanmotionstat_btn.pack(side="left", padx=10)
-#INCLINATION
+            tk.Button(
+                button_frame,
+                text="Statistics",
+                width=15,
+                height=2,
+                bg="#D20A2E",
+                fg="#FFB5C0",
+                command=stat_function
+            ).pack(side="left",padx=10)
+            print(title,"stats button ok")
 
-    inc_frame=tk.Frame(
-        controls_frame,
-        bg="#DA2C43"
-    )
-    inc_frame.pack(pady=5)
+    #sections
 
-    title=tk.Label(
-        inc_frame,
-        text="Inclination",
-        bg="#DA2C43",
-        font=("Segoe UI",22,"italic"),
-        fg="#FFB5C0"
-    )
-    title.pack(pady=5)
 
-    inc_button_frame=tk.Frame(
-        inc_frame,
-        bg="#DA2C43"
-    )
-    inc_button_frame.pack(pady=5)
+        add_section(
+                "BSTAR",
+                gen_bstargraph,
+                gen_bstarstats
+            )
+        add_section(
+            "Inclination",
+            gen_incgraph,
+            gen_incstat
+        )
+        add_section(
+            "Mean Motion",
+            gen_meanmotiongraph,
+            gen_meanmotionstat
+        )
+        add_section(
+            "Epoch",
+            gen_epochgraph,
+            gen_epochstat
+        )
+        add_section(
+            "Eccentricity",
+            gen_eccgraph,
+            gen_eccstat
+               
+        )
+    except Exception as e:
+        import traceback
+        traceback.print_exc()
 
-    incgraph_btn=tk.Button(
-        inc_button_frame,
-        text="Graph",
-        width=15,
-        bg="#D20A2E",
-        fg="#FFB5C0",
-        height=2,
-        command=lambda: show_graph(gen_incgraph())
-    )
 
-    incgraph_btn.pack(side="left", padx=10)
 
-    incstat_btn=tk.Button(
-        inc_button_frame,
-        text="Statistics",
-        width=15,
-        bg="#D20A2E",
-        fg="#FFB5C0",
-        height=2,
-        command=gen_incstat
-    )
-    incstat_btn.pack(side="left", padx=10)
-
-    # Eccentricity 
-
-    ecc_frame=tk.Frame(
-        controls_frame,
-        bg="#DA2C43"
-    )
-    ecc_frame.pack(pady=5)
-
-    title=tk.Label(
-        ecc_frame,
-        text="Eccentricity",
-        bg="#DA2C43",
-        fg="#FFB5C0",
-        font=("Segoe UI",22,"italic")
-    )
-    title.pack(pady=5)
-
-    ecc_button_frame=tk.Frame(
-        ecc_frame,
-        bg="#DA2C43"
-    )
-    ecc_button_frame.pack(pady=5)
-
-    eccgraph_btn=tk.Button(
-        ecc_button_frame,
-        text="Graph",
-        width=15,
-        bg="#D20A2E",
-        fg="#FFB5C0",
-        height=2,
-        command=lambda: show_graph(gen_eccgraph())
-    )
-    eccgraph_btn.pack(side="left", padx=10)
-
-    eccstat_btn=tk.Button(
-        ecc_button_frame,
-        text="Statistics",
-        width=15,
-        bg="#D20A2E",
-        fg="#FFB5C0",
-        height=2,
-        command=gen_eccstat
-    )
-    eccstat_btn.pack(side="left", padx=10)
-
-    #epoch
-     
-    epoch_frame=tk.Frame(
-        controls_frame,
-        bg="#DA2C43"
-    )
-    epoch_frame.pack(pady=5)
-
-    title=tk.Label(
-        epoch_frame,
-        text="Epoch",
-        font=("Segoe UI",22,"italic"),
-        bg="#DA2C43",
-        fg="#FFB5C0"
-    )
-    title.pack(pady=5)
-
-    epoch_button_frame=tk.Frame(
-        epoch_frame,
-        bg="#DA2C43"
-    )
-    epoch_button_frame.pack(pady=5)
-
-    epochgraph_btn=tk.Button(
-        epoch_button_frame, 
-        text="Graph",
-        width=15,
-        bg="#D20A2E",
-        fg="#FFB5C0",
-        height=2,
-        command=lambda:show_graph(gen_epochgraph())
-    )
-    epochgraph_btn.pack(side="left", padx=10)
-
-    epochstat_btn=tk.Button(
-        epoch_button_frame, 
-        text="Statistics",
-        width=15,
-        bg="#D20A2E",
-        fg="#FFB5C0",
-        height=2,
-        command=gen_epochstat
-    )
-    epochstat_btn.pack(side="left", padx=10)

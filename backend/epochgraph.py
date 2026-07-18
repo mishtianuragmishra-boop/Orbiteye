@@ -2,25 +2,6 @@ import tkinter as tk
 import matplotlib.pyplot as plt
 
 def gen_epochgraph():
-    popup=tk.Toplevel()
-    popup.title("Epoch")
-    popup.geometry("350x150")
-    popup.configure(bg="#DA2C43")
-    tk.Label(
-        popup,
-        text="Generating Epoch Graph . . . .",
-        bg="#DA2C43",
-        fg="#FFB5C0",
-        font=("Segoe UI",10,"bold")
-    ).pack(pady=30)
-    tk.Button(
-        popup,
-        text="OK",
-        bg="#D20A2E",
-        fg="#FFB5C0",
-        width=12,
-        command=popup.destroy
-    ).pack()
 
     epoch=[]
     with open("data/starlink.tle.txt","r",encoding="utf-8") as f:
@@ -30,25 +11,24 @@ def gen_epochgraph():
         parts=lines[i].split()
         epoch.append(float(parts[3]))
 
-    plt.figure(figsize=(8,5))
+    fig,ax=plt.subplots(figsize=(8,5))
 
-    plt.hist(
+    ax.hist(
         epoch,
         bins=30,
-        color="#FF8FAB",
+        color="#7BB76C",
         edgecolor="#D20A2E"
     )
+    ax.set_facecolor("#E3708F")
 
-    plt.gca().set_facecolor("#FFF5F8")
+    ax.set_title("Epoch Distribution")
+    ax.set_xlabel("Epoch")
+    ax.set_ylabel("Number of satellites")
 
-    plt.title("Epoch Distribution")
-    plt.xlabel("Epoch (rev/days)")
-    plt.ylabel("Number of Satellites")
+    ax.grid(alpha=0.3)
+    fig.tight_layout()
+    print(len(epoch))
 
-    plt.grid(alpha=0.3)
+    return fig
 
-    popup.update
-    popup.destroy
 
-    plt.show()
-  

@@ -2,25 +2,6 @@ import tkinter as tk
 import matplotlib.pyplot as plt
 
 def gen_eccgraph():
-    popup=tk.Toplevel()
-    popup.title("Eccentricity")
-    popup.geometry("350x150")
-    popup.configure(bg="#DA2C43")
-    tk.Label(
-        popup,
-        text="Generating Eccentricity Graph . . . .",
-        bg="#DA2C43",
-        fg="#FFB5C0",
-        font=("Segoe UI",10,"bold")
-    ).pack(pady=30)
-    tk.Button(
-        popup,
-        text="OK",
-        bg="#D20A2E",
-        fg="#FFB5C0",
-        width=12,
-        command=popup.destroy
-    ).pack()
 
     ecc=[]
     with open("data/starlink.tle.txt","r",encoding="utf-8") as f:
@@ -30,24 +11,21 @@ def gen_eccgraph():
         parts=lines[i].split()
         ecc.append(float("0." + parts[4]))
 
-    plt.figure(figsize=(8,5))
+    fig,ax=plt.subplots(figsize=(8,5))
 
-    plt.hist(
+    ax.hist(
         ecc,
         bins=30,
         color="#FF8FAB",
         edgecolor="#D20A2E"
     )
+    ax.set_facecolor("#FFF5F8")
 
-    plt.gca().set_facecolor("#FFF5F8")
+    ax.set_title("Eccenricity Distribution")
+    ax.set_xlabel("ECC")
+    ax.set_ylabel("Numbe of satellites")
 
-    plt.title("Eccentricity Distribution")
-    plt.xlabel("Eccentricity (rev/days)")
-    plt.ylabel("Number of Satellites")
+    ax.grid(alpha=0.3)
+    fig.tight_layout()
 
-    plt.grid(alpha=0.3)
-
-    popup.update
-    popup.destroy
-
-    plt.show()
+    return fig

@@ -1,148 +1,218 @@
-# OrbitEye 🚀
+#  OrbitEye
 
-OrbitEye is a Python-based satellite tracking and analysis application developed as an Electronics and Communication Engineering (ECE) project. It allows users to search for satellites, analyze orbital parameters, and track satellite positions using real-world orbital data from CelesTrak.
+OrbitEye is an interactive web-based satellite tracking platform built using **Python, Flask, JavaScript, and CesiumJS**.
 
----
-
-## Features
-
-### 🔍 Satellite Search
-
-* Search satellites by **Name**
-* Search satellites by **NORAD Catalog ID**
-* Display complete satellite information including:
-
-  * Object Name
-  * Object ID
-  * Epoch
-  * Mean Motion
-  * Eccentricity
-  * Inclination
-  * Right Ascension of Ascending Node
-  * Argument of Pericenter
-  * Mean Anomaly
-  * Ephemeris Type
-  * Classification Type
-  * NORAD Catalog ID
-  * Element Set Number
-  * Revolution at Epoch
-  * BSTAR Drag Term
-  * Mean Motion Dot
-  * Mean Motion DDot
+The goal of OrbitEye is to visualize Earth-orbiting satellites in real time while providing satellite search, orbital analytics, and detailed satellite information through an intuitive interface.
 
 ---
 
-## Orbital Analytics
+#  Features
 
-OrbitEye computes the following statistics for the satellite dataset:
+##  Interactive 3D Earth
 
-* Mean Motion
-* Inclination
-* Eccentricity
-* BSTAR Drag Term
-* Epoch
-
-For each parameter, the program calculates:
-
-* Average value
-* Maximum value and corresponding satellite
-* Minimum value and corresponding satellite
+- Powered by CesiumJS
+- Realistic globe rendering
+- Atmospheric effects
+- Dynamic lighting
+- Smooth camera navigation
 
 ---
 
-## Live Satellite Tracking
+##  Satellite Search
 
-Using the Skyfield library and TLE (Two-Line Element) data, OrbitEye provides the current:
+- Search satellites by name
+- Display matching results
+- Select satellites for detailed information
 
-* Latitude
-* Longitude
-* Altitude
-
-of a selected satellite.
+*(Currently under development)*
 
 ---
 
-## Technologies Used
+##  Analytics
 
-* Python 3
-* CSV
-* Skyfield
-* Datetime
+OrbitEye includes analytics tools for exploring satellite datasets.
 
----
+Current analytics include:
 
-## Dataset
-
-Satellite data is obtained from **CelesTrak** in the following formats:
-
-* CSV
-* TLE (Two-Line Element)
+- BSTAR distribution
+- Mean Motion analysis
+- Inclination distribution
+- Epoch analysis
+- Eccentricity analysis
 
 ---
 
-## Project Structure
+##  Backend API
+
+Built using Flask.
+
+Current API:
 
 ```
-OrbitEye/
+GET /api/satellitecount
+```
+
+Returns the total number of satellites currently loaded.
+
+Example response:
+
+```json
+{
+    "count": 10631
+}
+```
+
+---
+
+#  Data Source
+
+Satellite data is obtained from **CelesTrak**.
+
+Current datasets include:
+
+- TLE data
+- Orbital parameters
+- Satellite statistics
+
+---
+
+#  Tech Stack
+
+### Frontend
+
+- JavaScript
+- HTML
+- CSS
+- Vite
+- CesiumJS
+
+### Backend
+
+- Python
+- Flask
+- Flask-CORS
+
+### Data Processing
+
+- Python
+- CSV
+- Matplotlib
+
+---
+
+#  Project Structure
+
+```
+Orbiteye/
 │
 ├── backend/
-│   ├── main.py
-│   ├── analytics.py
-│   ├── tsearch.py
-│   ├── tracker.py
-│   └── data/
-│       ├── starlink.csv
-│       └── starlink.tle
+│   ├── api.py
+│   ├── readtle.py
+│   ├── bstargraph.py
+│   ├── meanmotiongraph.py
+│   ├── eccgraph.py
+│   ├── epochgraph.py
+│   └── incgraph.py
 │
-├── README.md
-└── requirements.txt
+├── frontend-earth/
+│   ├── src/
+│   ├── public/
+│   └── vite.config.js
+│
+└── data/
 ```
 
 ---
 
-## Installation
+#  Current Progress
 
-Install the required library:
+##  Completed
+
+- CesiumJS integration
+- OrbitEye interface
+- Responsive UI layout
+- Flask backend
+- Frontend ↔ Backend connection
+- Live satellite count API
+- Analytics modules
+
+##  In Progress
+
+- Satellite search
+- Dynamic search results
+- Satellite information panel
+- Orbit visualization
+- Live tracking
+
+##  Planned
+
+- Analytics dashboard
+- Satellite filters
+- Orbit prediction
+- Saved satellites
+- Deployment
+
+---
+
+#  Running OrbitEye
+
+### Backend
+
+```bash
+cd backend
+python api.py
+```
+
+Backend runs on:
 
 ```
-pip install skyfield
+http://127.0.0.1:5000
 ```
 
 ---
 
-## Running the Project
+### Frontend
 
-Run the main program:
+```bash
+cd frontend-earth
+npm install
+npm run dev
+```
+
+Frontend runs on:
 
 ```
-python main.py
-```
-
----
-
-## Menu
-
-```
-========== ORBIT EYE ==========
-1. Search
-2. Analytics
-3. Tracker
-4. Exit
+http://localhost:5173
 ```
 
 ---
 
-## Future Enhancements
+# Project Goal
 
-* Graphical User Interface (GUI)
-* MATLAB-based orbital visualization
-* Interactive ground-track maps
-* Data visualization and statistical plots
-* API integration
-* Database support
+OrbitEye is designed as a portfolio project demonstrating:
+
+- Interactive geospatial visualization
+- Backend API development
+- Frontend development
+- Data visualization
+- Satellite tracking
+- Modern web application architecture
 
 ---
 
-## Author
-MISHTI ANURAG MISHRA
-Developed as an Electronics and Communication Engineering (ECE) academic project using real satellite orbital data.
+# Development Status
+
+Current Version:
+
+**v0.3 — Website Foundation Complete**
+
+Next milestone:
+
+- Live satellite search
+- Satellite selection
+- Orbit rendering
+- Analytics dashboard
+
+---
+
+Made with ❤️ using Python, Flask and CesiumJS.
